@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SQLitePractice1</string>
+    <string name="toolbarName">Потребительская корзина</string>
+    <string name="exit">Выход</string>
+    <string name="name">Название продукта</string>
+    <string name="weight">Вес</string>
+    <string name="price">Цена</string>
+    <string name="save">Сохранить</string>
+    <string name="remove">Очистить базу</string>
+</resources>
