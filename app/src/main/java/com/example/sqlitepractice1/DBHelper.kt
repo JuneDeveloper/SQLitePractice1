@@ -21,16 +21,18 @@ class DBHelper(context: Context):
 
     override fun onCreate(db: SQLiteDatabase?) {
         val PRODUCT_TABLE = (
-                "CREATE TABLE " + TABLE_NAME +
-                " (" +  KEY_NAME + " TEXT, " +
-                KEY_WEIGHT + " TEXT, " + KEY_PRICE + " TEXT" + ")")
+                "CREATE TABLE " + TABLE_NAME + " ("
+                        + KEY_NAME + " TEXT,"
+                        + KEY_WEIGHT + " TEXT,"
+                        + KEY_PRICE + " TEXT" + ")")
         db?.execSQL(PRODUCT_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
     }
+
     fun saveProduct(product: Product){
         val db = this.writableDatabase
         val contentValues = ContentValues()
@@ -41,7 +43,7 @@ class DBHelper(context: Context):
         db.close()
     }
 
-    @SuppressLint("Recycle", "Range")
+    @SuppressLint("Range", "Recycle")
     fun getProduct():MutableList<Product>{
         val productList:MutableList<Product> = mutableListOf()
         val selectQuery = "SELECT * FROM $TABLE_NAME"
@@ -66,6 +68,24 @@ class DBHelper(context: Context):
             }while (cursor.moveToNext())
         }
         return productList
+    }
+
+    fun updateProduct(product: Product){
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_NAME,product.productName)
+        contentValues.put(KEY_WEIGHT,product.productWeight)
+        contentValues.put(KEY_PRICE,product.productPrice)
+        db.update(TABLE_NAME,contentValues,"name=" + product.productName, null)
+        db.close()
+    }
+
+    fun deleteProduct(product: Product){
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_NAME,product.productName)
+        db.delete(TABLE_NAME,"name=" + product.productName, null)
+        db.close()
     }
 
     fun deleteAll(){

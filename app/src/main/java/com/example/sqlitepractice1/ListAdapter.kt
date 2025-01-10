@@ -24,7 +24,7 @@ class ListAdapter(private val context: Context,productList:MutableList<Product>)
 
         name?.text = "Продукт: ${product?.productName}"
         weight?.text = "Вес: ${product?.productWeight}"
-        price?.text = "Цена: ${product?.productPrice}$"
+        price?.text = "Цена: ${product?.productPrice}"
 
         return view!!
     }
